@@ -10,7 +10,7 @@ int iterations = 10;
 
 void setup() {
     size(640, 640);
-    //fullScreen();
+    fullScreen();
     background(0);
     //Drawing params
     noStroke();
