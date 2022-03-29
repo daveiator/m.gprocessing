@@ -21,16 +21,17 @@ void setup() {
 void draw() {
 
     background(0);
-
+    
     clouds[0].c_position.x = mouseX;
     clouds[0].c_position.y = mouseY;
-
+    
     physicsCalc();
 
 
     for (int i = 0; i < clouds.length; i++) {
         clouds[i].draw();
     }
+
 }
 
 
