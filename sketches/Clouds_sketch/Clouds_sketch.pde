@@ -2,7 +2,6 @@
 
 Cloud[] clouds = new Cloud[20];
 
-
 void setup() {
     
     //Initialize Screen
@@ -12,7 +11,7 @@ void setup() {
 
 
     for (int i = 0; i < clouds.length; i++) {
-        clouds[i] = new Cloud(new PVector(random(width) , random(height)), random(15,50), color(255));
+        clouds[i] = new Cloud(new FloatVector(random(width) , random(height)), random(15,50), color(255));
     }
 
     clouds[0].c_static = true;
@@ -36,33 +35,16 @@ void draw() {
 
 
 void physicsCalc() {
-    calculate();
+    
+    for (int i = 0; i  < clouds.length; i++) {
+        for (int j = 0; j < clouds.length; j++) {
+            if(i != j) {
+                clouds[i].calculate(clouds[j]);
+            }
+        }
+    }
 
     for (int i = 0; i < clouds.length; i++) {
         clouds[i].move();
-    }
-}
-
-void calculate() {
-    //calculate cloud
-    float speed = -0.0001f;
-    float damp = .5f;
-    for (int i = 0; i < clouds.length; i++) {
-        //Per cloud
-        if(clouds[i].c_static) {
-            clouds[i].c_acceleration = new PVector();
-            clouds[i].c_velocity = new PVector();
-        } else {
-            PVector t_acceleration = new PVector();
-            for(int j = i+1;j < clouds.length; j++) {
-                //To all other clouds
-                if (i != j) {
-                    t_acceleration = PVector.mult(PVector.add(t_acceleration, PVector.mult(PVector.sub(clouds[i].c_position, clouds[j].c_position), speed)), damp);
-                }
-            }
-            clouds[i].c_acceleration = t_acceleration;
-            //apply forces
-            clouds[i].c_velocity = PVector.add(clouds[i].c_velocity, clouds[i].c_acceleration);
-        }
     }
 }
