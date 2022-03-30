@@ -1,6 +1,6 @@
 //language == processing
 
-Cloud[] clouds = new Cloud[20];
+Cloud[] clouds = new Cloud[100];
 
 void setup() {
     
@@ -43,6 +43,7 @@ void physicsCalc() {
                 clouds[i].calculate(clouds[j]);
             }
         }
+        clouds[i].calculateBorder();
     }
 
     for (int i = 0; i < clouds.length; i++) {

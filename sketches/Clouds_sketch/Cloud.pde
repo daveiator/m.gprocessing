@@ -34,13 +34,17 @@ class Cloud {
     private float c_gFalloff(Cloud other) {
         float t_x = this.c_position.dist(other.c_position) - this.c_radius - other.c_radius;
         
-        t_x = map(t_x,0f,100f,0f,1f);
-        return t_x;
+        t_x = map(t_x,0f,1000f,10f,0f);
+        return -t_x * c_drag * 0.0001;
     }
 
     public void calculate (Cloud other) {
         t_relativePos = t_relativePos.add(other.c_position.sub(c_position));
         t_relativePos = t_relativePos.mul(c_gFalloff(other));
+    }
+
+    public void calculateBorder() {
+        t_relativePos = t_relativePos.add(new FloatVector(width/2, height/2).sub(c_position)).mul(1);
     }
 
 
