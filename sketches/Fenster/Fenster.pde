@@ -1,8 +1,10 @@
 //language == processing
 
 dynWindow dWindow;
+int bg = 0;
+
 void settings(){
-    size(400, 200, P2D);
+    size(200, 200, P2D);
     //setResizable(false);
 }
 
@@ -12,7 +14,14 @@ void setup(){
 
 }
 void draw(){
-    background(0);
-    dWindow.moveWindowOnCursor();
+    background(bg*255);
+    textAlign(CENTER);
+    fill((bg-1)*-255);
+    int tSize = height;
+    textSize(tSize);
+    text(":)",width/2,height/2+tSize/4);
+    if(dWindow.moveWindowOnCursor()) {
+        bg = (bg -1) *-1;
+    }
 
 }
