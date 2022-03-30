@@ -55,6 +55,8 @@ class dynWindow {
                 pMouse.getY() > xRelWindow[0].getY() - tolerance.getY() && pMouse.getY() < xRelWindow[0].getY() + buttonSize.getY() + tolerance.getY()) {
                 //move window randomly
                 moveWindowGlobal(int(random(screenSize.getX()-width)), int(random(buttonSize.getY(), screenSize.getY()-height)));
+
+                return true;
             }
 
 
@@ -66,7 +68,7 @@ class dynWindow {
                 text("x: " + xRelWindow[1].getX() + " y: " + xRelWindow[1].getY(), 10, 70);
             */
         }
-        return true;
+        return false;
     }
 
     private void moveWindowGlobal(int _x, int _y) {
