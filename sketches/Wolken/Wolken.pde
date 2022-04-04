@@ -8,7 +8,7 @@ void settings() {
 void setup() {
     colorMode(HSB, 360, 100, 100);
     imageMode(CENTER);
-    img = loadImage("https://cdn.discordapp.com/attachments/860993443625959449/960180154892705903/cloud_1.png");
+    img = loadImage("cloud_1.png");
 }
 
 void draw() {
