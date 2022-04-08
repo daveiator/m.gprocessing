@@ -2,7 +2,8 @@
 
 class CircleCloud {
     float x, y, r;
-    Cloud[] clouds
+    float rotation = 0;
+    Cloud[] clouds;
 
     public CircleCloud(float x, float y, float r, Cloud[] clouds) {
         this.x = x;
@@ -14,11 +15,16 @@ class CircleCloud {
     public void draw() {
         pushMatrix();
         translate(x, y);
+        //(rotation);
         float a = TWO_PI / clouds.length;
         for (Cloud cloud : clouds) {
             cloud.draw(0, r);
             rotate(a);
         }
         popMatrix();
+    }
+
+    public void rotate(float angle) {
+        rotation += angle;
     }
 }

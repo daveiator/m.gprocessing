@@ -14,7 +14,6 @@ class Cloud {
     public void draw(float _x, float _y) {
         float w =  img.width * size;
         float h = img.height * size;
-        println(w + " " + h);
 ;       image(img, _x, _y, w, h);
     }
 }
