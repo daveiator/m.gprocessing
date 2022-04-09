@@ -17,9 +17,10 @@ class CircleCloud {
         translate(x, y);
         //(rotation);
         float a = TWO_PI / clouds.length;
-        for (Cloud cloud : clouds) {
-            cloud.draw(0, r);
-            rotate(a);
+        for (int i = 0; i < clouds.length; i++) {
+            clouds[i].draw(r, 0);
+            rotate(PI);
+            translate(100, 0);
         }
         popMatrix();
     }

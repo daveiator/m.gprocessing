@@ -9,7 +9,7 @@ void setup() {
     for (int i = 0; i < clouds.length; i++) {
         clouds[i] = new Cloud(0, 0, .1, loadImage("cloud_1.png"));
     }
-    CircleCloud c = new CircleCloud(width/2, height/2, 10 ,clouds);
+    CircleCloud c = new CircleCloud(width/2, height/2, 400 ,clouds);
     c.draw();
     //c.rotate(TWO_PI/360);
 }
