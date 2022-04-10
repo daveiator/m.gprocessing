@@ -64,5 +64,9 @@ void keyPressed() {
             //pause simulation
             pause = !pause;
             break;
+
+        case 's':
+            //take screenshot
+            saveFrame("/screenshots/screenshot-####.png");
     }
 }
