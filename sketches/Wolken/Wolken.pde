@@ -8,7 +8,8 @@ boolean pause;
 
 void setup() {
     //Settings
-    size(1500, 800);
+    fullScreen();
+    //size(1500, 800);
     imageMode(CENTER);
 
     
