@@ -39,7 +39,8 @@ class Logo {
     void draw() {
         image(img, x, y, img.width*s, img.height*s);
         filter(INVERT);
-        tint(c);
+        fill(c);
+        rect(0, 0, width, height);
     }
 
     private void changeColor() {
