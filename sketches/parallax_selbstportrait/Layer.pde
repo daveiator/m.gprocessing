@@ -2,29 +2,44 @@
 
 class Layer {
 
-    PImage img
-    float x, y, z, scale;
-    final float zFac = 1f;
-    static float oX, oY, fracZ;
-    public void Layer(PImage img, float x, float y, float z) {
+    OImage img;
+    float x, y, scale;
+    float fX, fY, fScale;
+    float iX, iY, iScale;
+    public Layer(OImage img, float x, float y, float scale) {
         this.img = img;
         this.x = x;
         this.y = y;
-        this.z = z;
+        this.scale = scale;
     }
 
-    public draw() {
+    public void draw(int iterations, float _fScale, float _fX, float _fY) {
+        fX = _fX;
+        fY = _fY;
+        fScale = _fScale;
+        println("("+fScale + "-" + scale + ")/" + iterations);
+        iScale = (fScale - scale) / iterations;
+        print(iScale);
+        iX = (fX - x) / iterations;
+        iY = (fY -y) / iterations;
+        iterDraw(iterations);
+    }
+
+    private void iterDraw(int i) {
+        if(i>1) {
+            iterDraw(i -1);
+        }
+        //debug
+        // println(i);
+        // println(iX, iY, iScale);
+        
         pushMatrix();
-        imageMode(CENTER);
-        translate(oX, oY);
-        image(img, x, y, img.width * scale, img.height * scale);
+            translate(x, y);
+            img.draw(iX * i, iY * i, iScale * i);
+            // image(img, iX * i, iY * i, iScale * i * img.width + fScale, iScale * i * img.height w
+        popMatrix();
 
+        return;
     }
 
-
-    public static void setOrigin(float _x, float _y, float _z) {
-        oX = _x;
-        oY = _y;
-        fracZ = _z;
-    }
 }
