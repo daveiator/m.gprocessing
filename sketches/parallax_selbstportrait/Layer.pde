@@ -3,9 +3,10 @@
 class Layer {
 
     OImage img;
+    int iterations;
     float x, y, scale;
-    float fX, fY, fScale;
     float iX, iY, iScale;
+    float fX, fY, fScale;
     public Layer(OImage img, float x, float y, float scale) {
         this.img = img;
         this.x = x;
@@ -13,32 +14,33 @@ class Layer {
         this.scale = scale;
     }
 
-    public void draw(int iterations, float _fScale, float _fX, float _fY) {
+    public void draw(int _iterations, float _fScale, float _fX, float _fY) {
+
+        iterations = _iterations - 1;
         fX = _fX;
         fY = _fY;
         fScale = _fScale;
-        println("("+fScale + "-" + scale + ")/" + iterations);
-        iScale = (fScale - scale) / iterations;
-        print(iScale);
+
+
         iX = (fX - x) / iterations;
-        iY = (fY -y) / iterations;
-        iterDraw(iterations);
+        iY = (fY - y) / iterations;
+        iScale = (scale - fScale) / iterations;
+        pushMatrix();
+            translate(x, y);
+            iterDraw(0);
+        popMatrix();
     }
 
     private void iterDraw(int i) {
-        if(i>1) {
-            iterDraw(i -1);
+        if(i<iterations) {
+            iterDraw(i + 1);
         }
-        //debug
-        // println(i);
-        // println(iX, iY, iScale);
-        
-        pushMatrix();
-            translate(x, y);
-            img.draw(iX * i, iY * i, iScale * i);
-            // image(img, iX * i, iY * i, iScale * i * img.width + fScale, iScale * i * img.height w
-        popMatrix();
+        float tScale = iScale * (iterations-i) + fScale;
 
+            img.draw(0, 0, tScale);
+
+        //ellipse(0, 0, 10*tScale, 10*tScale);
+        translate(iX, iY);
         return;
     }
 

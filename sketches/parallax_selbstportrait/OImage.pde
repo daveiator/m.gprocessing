@@ -17,28 +17,27 @@ public class OImage {
         this.oY = oY * img.height;
     }
 
+    public void draw(float x, float y, float s) {
+        pushMatrix();
+            //I gave up
+            imageMode(CENTER);
+            image(img, x, y - oY, s * img.width, s * img.height);
+            // image(img, s * (x - oX), s * (y - oY), s * img.width, s * img.height);
+        popMatrix();
+    }
 
+    //gets and sets
 
     public void setOrigin(int x, int y) {
         oX = x;
         oY = y;
     }
 
-    public void draw(float x, float y) {
-        pushMatrix();
-            imageMode(CORNER);
-            image(img, x - oX, y - oY);
-        popMatrix();
+    public int getWidth() {
+        return img.width;
     }
 
-    public void draw(float x, float y, float s) {
-        pushMatrix();
-    	    imageMode(CORNER);
-            int sX = (int) (img.width * s);
-            int sY = (int) (img.height * s);
-            int tX = (int) (this.oX * s);
-            int tY = (int) (this.oY * s); 
-            image(img, x - tX, y - tY, sX, sY);
-        popMatrix();
+    public int getHeight() {
+        return img.height;
     }
 }
