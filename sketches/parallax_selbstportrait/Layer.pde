@@ -2,6 +2,8 @@
 
 class Layer {
 
+    boolean debug = false;
+
     OImage img;
     int iterations;
     float x, y, scale;
@@ -38,10 +40,18 @@ class Layer {
         float tScale = iScale * (iterations-i) + fScale;
 
             img.draw(0, 0, tScale);
-
+            this.debug();
         //ellipse(0, 0, 10*tScale, 10*tScale);
         translate(iX, iY);
         return;
     }
 
+    private void debug() {
+        if(debug) {
+            stroke(255, 0, 0);
+            strokeWeight(1);
+            line(-width, 0, width, 0);
+            line(0, -height, 0, height);
+        }
+    }
 }

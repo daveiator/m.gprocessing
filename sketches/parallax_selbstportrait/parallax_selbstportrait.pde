@@ -31,3 +31,9 @@ void draw() {
     
 
 }
+
+void keyPressed() {
+    if (key == 'd') {
+        person.debug = !person.debug;
+    }    
+}
