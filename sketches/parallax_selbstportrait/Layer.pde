@@ -6,9 +6,9 @@ class Layer {
 
     OImage img;
     int iterations;
-    float x, y, scale;
-    float iX, iY, iScale;
-    float fX, fY, fScale;
+    float x, y, scale; //Current values
+    float iX, iY, iScale; //Iteration values
+    float fX, fY, fScale; //Final values
     public Layer(OImage img, float x, float y, float scale) {
         this.img = img;
         this.x = x;
@@ -41,7 +41,6 @@ class Layer {
 
             img.draw(0, 0, tScale);
             this.debug();
-        //ellipse(0, 0, 10*tScale, 10*tScale);
         translate(iX, iY);
         return;
     }
