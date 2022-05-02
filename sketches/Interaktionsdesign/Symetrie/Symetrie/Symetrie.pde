@@ -4,6 +4,7 @@ int mouse_x, mouse_y;
 
 void setup() {
   size(1400,700);
+  //fullScreen();
   img = loadImage("pwr_line.jpg");
   img.resize(width/2, height);
 
