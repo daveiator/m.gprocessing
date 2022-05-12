@@ -16,12 +16,12 @@ void setup() {
     newImage("img.png"); //* Change start image here
 }
 void settings() {
-    size(displayHeight, displayHeight); //* Change resolution here
+    size(displayHeight, displayHeight); //* Change resolution here (when only using one image this should have the same ratio as the image)
 }
 
 
 
-//Interaction
+//Interaction through mouse
 void mouseDragged() {
     mousePressed();
 }
@@ -32,14 +32,9 @@ void mousePressed() {
     drawTiles(); //Redraw tiles
 }
 
+//keystrokes
 void keyPressed() {
     switch (key) {
-        case 'c':
-            //CLear tiles and add start tile
-            tiles.clear();
-            tiles.add(new Tile(0, 0, width, height, img));
-            drawTiles();
-            break;
 
         case 'l':
             //load new image
@@ -48,6 +43,16 @@ void keyPressed() {
         case 's':
             //Take screenshot
             saveFrame("/screenshots/screenshot-####.png"); //* Change screenshot directory here
+            break;
+        
+        case 'f':
+            //Toggle fancy mode
+            fancyMode = !fancyMode;
+            println("Fancy mode: " + fancyMode);
+            //overflow to clear
+        case 'c':
+            resetImage();
+            break;
     }
     //Change tile resolution
     if(Character.isDigit(key)) {
@@ -59,8 +64,12 @@ void keyPressed() {
 //load new image
 void newImage(String filename) {
     img = loadImage(filename);
-    resetMatrix();
     println("new Image loaded");
+    resetImage();
+}
+
+//reset image
+void resetImage() {
     //check scaling
     float screenRatio = width / height;
     float imgRatio = float(img.width) / img.height;
@@ -71,10 +80,11 @@ void newImage(String filename) {
     } else if (imgRatio < screenRatio) {
         resizeX = int(width * imgRatio);
     }
+    
     background(bg);
     img.resize(resizeX, resizeY);
     tiles.clear();
-    //img.filter(GRAY); //* add Astetic filter (optional)
+    //img.filter(GRAY); //* add Astetic filter here (optional)
     //Adding start tile
     tiles.add(new Tile(0, 0, resizeX, resizeY, img));
     drawTiles();
@@ -94,6 +104,7 @@ void fileSelected(File file) {
     }
 }
 
+//fancy mode transforms
 float transX () {
     if(fancyMode) {
         return abs(width - img.width) / 2.0f;
@@ -107,11 +118,11 @@ float transY () {
     return 0;
 }
 
-//Subdivision
+//subdivision
 void subdiv(int x, int y) {
     //Check for stack overflow
     if(depth > limit) {
-        return;
+        return; //Stop subdivision
     }
     depth++;
 
@@ -126,7 +137,7 @@ void subdiv(int x, int y) {
                 break; //Break if tile is found
                 }       
         } catch (Exception e) {
-            //if subdivision fails, subdivide random tile
+            //if subdivision fails, subdivide random tile (this could be made more interesting)
             subdiv(int(random(width)), int(random(height)));
         }
     }  
