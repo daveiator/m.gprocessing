@@ -4,19 +4,16 @@ int depth = 0; //Current depth of the subdivision call stack
 int limit = 25000; //Call-stack limit (Change this at own risk!)
 
 PImage img;
+color bg;
 ArrayList<Tile> tiles = new ArrayList<Tile>(); //Tile-Array (ArrayList for dynamic size)
 
 //Setup
 void setup() {
-    img = loadImage("img.png"); //* Change image here
-    img.resize(width, height);
-    //img.filter(GRAY); //Astetic filter (optional)
-    //Adding start tile
-    tiles.add(new Tile(0, 0, width, height, img));
-    drawTiles();
+    bg = color(#282c34); //* Change background color here
+    newImage("img.png"); //* Change start image here
 }
 void settings() {
-    size(750, 1050); //* Change resolution here
+    size(displayHeight, displayHeight); //* Change resolution here
 }
 
 
@@ -26,7 +23,7 @@ void mouseDragged() {
     mousePressed();
 }
 void mousePressed() {
-    subdiv(mouseX, mouseY); //Subdivide based on mouse position
+    subdiv(mouseX - int(transX()), mouseY - int(transY())); //Subdivide based on mouse position
     drawTiles(); //Redraw tiles
 }
 
@@ -38,10 +35,60 @@ void keyPressed() {
             tiles.add(new Tile(0, 0, width, height, img));
             drawTiles();
             break;
+
+        case 'l':
+            //load new image
+            selectInput("Select image", "fileSelected");
+            break;
         case 's':
             //Take screenshot
             saveFrame("/screenshots/screenshot-####.png"); //* Change screenshot directory here
     }
+}
+
+//load new image
+void newImage(String filename) {
+    img = loadImage(filename);
+    resetMatrix();
+    println("new Image loaded");
+    //check scaling
+    float screenRatio = width / height;
+    float imgRatio = float(img.width) / img.height;
+    int resizeX = width;
+    int resizeY = height;
+    if (imgRatio > screenRatio) {
+        resizeY = int(height * 1/imgRatio);
+    } else if (imgRatio < screenRatio) {
+        resizeX = int(width * imgRatio);
+    }
+    background(bg);
+    img.resize(resizeX, resizeY);
+    tiles.clear();
+    //img.filter(GRAY); //* add Astetic filter (optional)
+    //Adding start tile
+    tiles.add(new Tile(0, 0, resizeX, resizeY, img));
+    drawTiles();
+}
+
+//load file
+void fileSelected(File file) {
+    
+    if (file == null) {
+        return;
+    }
+    //check for supported extension
+    String fileName = file.getName();
+    if (fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".gif") || fileName.endsWith(".tga")) {
+        println("Loading new image: " + file.getAbsolutePath());
+        newImage(file.getAbsolutePath());
+    }
+}
+
+float transX () {
+    return 0;//abs(width - img.width) / 2.0f;
+}
+float transY () {
+    return 0;//abs(height - img.height) / 2.0f;
 }
 
 //Subdivision
@@ -71,6 +118,9 @@ void subdiv(int x, int y) {
 
 //Draw tiles
 void drawTiles() {
+    resetMatrix();
+    translate(transX(), transY());
+    background(bg);
     for (int i = 0; i < tiles.size(); i++) {
         Tile t = tiles.get(i);
         t.draw();
