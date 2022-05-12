@@ -3,8 +3,11 @@
 int depth = 0; //Current depth of the subdivision call stack
 int limit = 25000; //Call-stack limit (Change this at own risk!)
 
+int tileRes = 1; //Tile resolution (1 = 1x1, 2 = 2x2, etc.)
+
 PImage img;
 color bg;
+boolean fancyMode = false; //* Change this to true to enable centered images (Draws a lot of performance!)
 ArrayList<Tile> tiles = new ArrayList<Tile>(); //Tile-Array (ArrayList for dynamic size)
 
 //Setup
@@ -23,7 +26,9 @@ void mouseDragged() {
     mousePressed();
 }
 void mousePressed() {
-    subdiv(mouseX - int(transX()), mouseY - int(transY())); //Subdivide based on mouse position
+    int x = mouseX - int(transX());
+    int y = mouseY - int(transY());
+    subdiv(x - x % tileRes, y - y % tileRes); //Subdivide based on mouse position
     drawTiles(); //Redraw tiles
 }
 
@@ -43,6 +48,11 @@ void keyPressed() {
         case 's':
             //Take screenshot
             saveFrame("/screenshots/screenshot-####.png"); //* Change screenshot directory here
+    }
+    //Change tile resolution
+    if(Character.isDigit(key)) {
+        tileRes = max(1, Character.getNumericValue(key));
+        println("Tile resolution changed to " + tileRes);
     }
 }
 
@@ -85,10 +95,16 @@ void fileSelected(File file) {
 }
 
 float transX () {
-    return 0;//abs(width - img.width) / 2.0f;
+    if(fancyMode) {
+        return abs(width - img.width) / 2.0f;
+    }
+    return 0;
 }
 float transY () {
-    return 0;//abs(height - img.height) / 2.0f;
+    if(fancyMode) {
+        return abs(height - img.height) / 2.0f;
+    }
+    return 0;
 }
 
 //Subdivision
