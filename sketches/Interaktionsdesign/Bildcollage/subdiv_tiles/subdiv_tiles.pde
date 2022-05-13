@@ -8,15 +8,17 @@ int tileRes = 1; //Tile resolution (1 = 1x1, 2 = 2x2, etc.)
 PImage img;
 color bg;
 boolean fancyMode = false; //* Change this to true to enable centered images (Draws a lot of performance!)
+String currentImage = "img.png"; //* Change start image here
 ArrayList<Tile> tiles = new ArrayList<Tile>(); //Tile-Array (ArrayList for dynamic size)
 
 //Setup
 void setup() {
     bg = color(#282c34); //* Change background color here
-    newImage("img.png"); //* Change start image here
+    newImage(currentImage); 
 }
 void settings() {
-    size(displayHeight, displayHeight); //* Change resolution here (when only using one image this should have the same ratio as the image)
+    size(750, 1050);
+    // size(displayHeight/2, displayHeight/2); //* Change resolution here (when only using one image this should have the same ratio as the image)
 }
 
 
@@ -30,6 +32,7 @@ void mousePressed() {
     int y = mouseY - int(transY());
     subdiv(x - x % tileRes, y - y % tileRes); //Subdivide based on mouse position
     drawTiles(); //Redraw tiles
+    image(img, 0, 0); //Draw image
 }
 
 //keystrokes
@@ -51,7 +54,7 @@ void keyPressed() {
             println("Fancy mode: " + fancyMode);
             //overflow to clear
         case 'c':
-            resetImage();
+            newImage();
             break;
     }
     //Change tile resolution
@@ -63,7 +66,13 @@ void keyPressed() {
 
 //load new image
 void newImage(String filename) {
-    img = loadImage(filename);
+    currentImage = filename;
+    img = loadImage(currentImage);
+    println("new Image loaded");
+    resetImage();
+}
+void newImage() {
+    img = loadImage(currentImage);
     println("new Image loaded");
     resetImage();
 }
@@ -71,16 +80,18 @@ void newImage(String filename) {
 //reset image
 void resetImage() {
     //check scaling
-    float screenRatio = width / height;
+    float screenRatio = float(width) / height;
     float imgRatio = float(img.width) / img.height;
     int resizeX = width;
     int resizeY = height;
+    println("Screen ratio: " + screenRatio + " Image ratio: " + imgRatio);
     if (imgRatio > screenRatio) {
         resizeY = int(height * 1/imgRatio);
     } else if (imgRatio < screenRatio) {
         resizeX = int(width * imgRatio);
     }
     
+    println("Resetting canvas");
     background(bg);
     img.resize(resizeX, resizeY);
     tiles.clear();
