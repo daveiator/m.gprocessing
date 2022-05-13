@@ -17,8 +17,8 @@ void setup() {
     newImage(currentImage); 
 }
 void settings() {
-    size(750, 1050);
     // size(displayHeight/2, displayHeight/2); //* Change resolution here (when only using one image this should have the same ratio as the image)
+    size(750, 1050); //This is the starting image ratio
 }
 
 
@@ -32,7 +32,6 @@ void mousePressed() {
     int y = mouseY - int(transY());
     subdiv(x - x % tileRes, y - y % tileRes); //Subdivide based on mouse position
     drawTiles(); //Redraw tiles
-    image(img, 0, 0); //Draw image
 }
 
 //keystrokes
@@ -84,11 +83,10 @@ void resetImage() {
     float imgRatio = float(img.width) / img.height;
     int resizeX = width;
     int resizeY = height;
-    println("Screen ratio: " + screenRatio + " Image ratio: " + imgRatio);
     if (imgRatio > screenRatio) {
-        resizeY = int(height * 1/imgRatio);
+        resizeY = int(float(width) / img.width * img.height);
     } else if (imgRatio < screenRatio) {
-        resizeX = int(width * imgRatio);
+        resizeX = int(float(height) / img.height * img.width);
     }
     
     println("Resetting canvas");
