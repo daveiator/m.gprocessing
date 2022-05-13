@@ -5,6 +5,10 @@ Hello, this is my little collection of Processing-Scripts which I made as part o
 
 Feel free to share or modify the code, but maybe change out the images! ;)
 
+__Disclaimer:__ There might be  German in some names.
+
+<hr/>
+
 <img src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Processing_2021_logo.svg" alt="Processing Logo" width="200"/>
 
 [Processing](https://www.processing.org)
