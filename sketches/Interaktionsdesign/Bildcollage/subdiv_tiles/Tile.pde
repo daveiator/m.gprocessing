@@ -19,8 +19,8 @@ class Tile {
     }
 
     //Draw tile
-    void draw() {
-        image(img, xMin, yMin);
+    void draw(float _oX, float _oY) {
+        image(img, xMin + _oX, yMin + _oY);
     }
 
     //check if coordinate is inside the tile

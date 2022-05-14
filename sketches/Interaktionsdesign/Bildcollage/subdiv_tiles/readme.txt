@@ -13,7 +13,6 @@ Usage:
         s: take a screenshot
         l: load a different image
         c: clear the canvas
-        f: toggle Fancy-Mode (Centered images at the cost of making your pc explode!)
 
 
 ===============================================================================================

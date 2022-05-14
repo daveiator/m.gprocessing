@@ -1,13 +1,12 @@
 //language == processing
 
 int depth = 0; //Current depth of the subdivision call stack
-int limit = 25000; //Call-stack limit (Change this at own risk!)
+int limit = 39; //Call-stack limit (Change this at own risk!)
 
 int tileRes = 1; //Tile resolution (1 = 1x1, 2 = 2x2, etc.)
 
 PImage img;
 color bg;
-boolean fancyMode = false; //* Change this to true to enable centered images (Draws a lot of performance!)
 String currentImage = "img.png"; //* Change start image here
 ArrayList<Tile> tiles = new ArrayList<Tile>(); //Tile-Array (ArrayList for dynamic size)
 
@@ -46,12 +45,6 @@ void keyPressed() {
             //Take screenshot
             saveFrame("/screenshots/screenshot-####.png"); //* Change screenshot directory here
             break;
-        
-        case 'f':
-            //Toggle fancy mode
-            fancyMode = !fancyMode;
-            println("Fancy mode: " + fancyMode);
-            //overflow to clear
         case 'c':
             newImage();
             break;
@@ -115,16 +108,10 @@ void fileSelected(File file) {
 
 //fancy mode transforms
 float transX () {
-    if(fancyMode) {
         return abs(width - img.width) / 2.0f;
-    }
-    return 0;
 }
 float transY () {
-    if(fancyMode) {
-        return abs(height - img.height) / 2.0f;
-    }
-    return 0;
+    return abs(height - img.height) / 2.0f;
 }
 
 //subdivision
@@ -147,19 +134,20 @@ void subdiv(int x, int y) {
                 }       
         } catch (Exception e) {
             //if subdivision fails, subdivide random tile (this could be made more interesting)
-            subdiv(int(random(width)), int(random(height)));
+            int _x = int(random(width));
+            int _y = int(random(height));
+            subdiv(_x - _x % tileRes, _y - _y % tileRes);
         }
-    }  
+    }
+    depth = 0;  
 }
 
 //Draw tiles
 void drawTiles() {
-    resetMatrix();
-    translate(transX(), transY());
     background(bg);
     for (int i = 0; i < tiles.size(); i++) {
         Tile t = tiles.get(i);
-        t.draw();
+        t.draw(transX(), transY());
     }
 }
 
