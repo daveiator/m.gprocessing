@@ -114,6 +114,13 @@ float transY () {
     return abs(height - img.height) / 2.0f;
 }
 
+void draw(){} //empty draw function (needed for processing to run)
+
+
+
+
+//These should be static functions in the Tile class:
+
 //subdivision
 void subdiv(int x, int y) {
     //Check for stack overflow
@@ -139,16 +146,25 @@ void subdiv(int x, int y) {
             subdiv(_x - _x % tileRes, _y - _y % tileRes);
         }
     }
+    tiles = cleanup(tiles); //Cleanup tiles
     depth = 0;  
 }
 
 //Draw tiles
 void drawTiles() {
-    background(bg);
     for (int i = 0; i < tiles.size(); i++) {
         Tile t = tiles.get(i);
         t.draw(transX(), transY());
     }
 }
 
-void draw(){} //empty draw function (needed for processing to run)
+//Cleanup tiles
+ArrayList<Tile> cleanup(ArrayList<Tile> tiles) {
+    ArrayList<Tile> returnTiles = new ArrayList<Tile>();
+    for (Tile t : tiles) {
+        if (t.xMax - t.xMin > 10 || t.yMax - t.yMin > 10) {
+            returnTiles.add(t);
+        }
+    }
+    return returnTiles;
+}
