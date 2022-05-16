@@ -8,8 +8,8 @@ void setup() {
     size_y = height /   4;  //* Change collumn-tile-size
     
     for (int i = 0; i < images.length; i++) {
-            images[i] = loadImage("img_0" + (i + 1) + ".png");
-            images[i].resize(width, height);
+        images[i] = loadImage("img_0" + (i + 1) + ".png");
+        images[i].resize(width, height);
     }
     image(images[int(random(images.length))], 0, 0);
 }
