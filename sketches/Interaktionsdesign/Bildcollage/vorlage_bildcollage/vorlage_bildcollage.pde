@@ -2,10 +2,10 @@ PImage[] images;
 int size_x, size_y;
 
 void setup() {
-    size(400, 400);
+    size(400, 400);         //* Change widonw size
     images = new PImage[5]; //* Change image count
-    size_x = width  /    4; //* Change rows
-    size_y = height /   4; //* Change collumns
+    size_x = width  /   4;  //* Change row-tile-size
+    size_y = height /   4;  //* Change collumn-tile-size
     
     for (int i = 0; i < images.length; i++) {
             images[i] = loadImage("img_0" + (i + 1) + ".png");
