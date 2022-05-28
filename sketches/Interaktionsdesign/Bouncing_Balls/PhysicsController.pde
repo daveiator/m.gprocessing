@@ -14,6 +14,20 @@ class PhysicsController {
         objects.remove(object);
     }
 
+    public PhysicsObject getObject(float x, float y) {
+        for (PhysicsObject object : objects) {
+            if (object.getPos().dist(new PVector(x, y)) < object.getR()) {
+                return object;
+            }
+        }
+        return null;
+    }
+
+    public void setDamping(float d) {
+        for (PhysicsObject object : objects) {
+            object.setDamping(d);
+        }
+    }
 
     private void calculateCollisions() {
         for (int i = 0; i < objects.size(); i++) {
@@ -42,6 +56,7 @@ class PhysicsController {
             object.draw();
         }
     }
+
 
 
 }

@@ -1,22 +1,24 @@
 class PhysicsObject {
-    float r;
+    float r, damping;
     PVector pos, speed;
 
     public PhysicsObject(int _x, int _y, int _r) {
         r = _r;
+        damping = 1;
         pos = new PVector(_x, _y);
         speed = new PVector((float) (Math.random() * 2 - 1) * 10f, (float) (Math.random() * 2 - 1) * 10f);
     }
 
     public PhysicsObject(int _x, int _y, int _r, float _speed_x, float _speed_y) {
         r = _r;
+        damping = 1;
         pos = new PVector(_x, _y);
         speed = new PVector(_speed_x, _speed_y);
     }
 
     public void move() {
         pos.add(speed);
-        speed.mult(0.9f);
+        speed.mult(damping);
     }
 
     public void draw() {
@@ -25,6 +27,8 @@ class PhysicsObject {
 
     public void collide(PhysicsObject object_2) {
 
+        float mass = 4/3 * PI * pow(r, 3);
+        float other_mass = 4/3 * PI * pow(object_2.getR(), 3);
 
         PVector delta = PVector.sub(object_2.getPos(), pos);
         float distance = delta.mag();
@@ -33,8 +37,8 @@ class PhysicsObject {
         PVector d = delta.copy();
         float distance_correction = ((r + object_2.getR()) - distance) / 2.0f;
         PVector correction = d.normalize().mult(distance_correction);
-        object_2.getPos().add(correction);
-        pos.sub(correction);
+        object_2.getPos().add(correction.mult(mass / (mass + other_mass)));
+        pos.sub(correction.mult(other_mass / (mass + other_mass)));
 
         //Calculate angles
         float theta = delta.heading();
@@ -57,8 +61,6 @@ class PhysicsObject {
         vTemp[1].y = cosine * object_2.getSpeed().y - sine * object_2.getSpeed().x;
 
         //final velocities
-        float mass = 4/3 * PI * pow(r, 3);
-        float other_mass = 4/3 * PI * pow(object_2.getR(), 3);
         
         PVector[] vFinal = {new PVector(), new PVector()};
 
@@ -68,24 +70,6 @@ class PhysicsObject {
         vFinal[1].x = ((other_mass - mass) * vTemp[1].x + 2 * mass * vTemp[0].x) / (mass + other_mass);
         vFinal[1].y = vTemp[1].y;
 
-        /*
-        //what?
-        bTemp[0].x += vFinal[0].x;
-        bTemp[1].x += vFinal[1].x;
-
-        //rotate back
-        PVector[] bFinal = {new PVector(), new PVector()};
-
-        bFinal[0].x = cosine * bTemp[0].x - sine * bTemp[0].y;
-        bFinal[0].y = cosine * bTemp[0].y + sine * bTemp[0].x;
-
-        bFinal[1].x = cosine * bTemp[1].x - sine * bTemp[1].y;
-        bFinal[1].y = cosine * bTemp[1].y + sine * bTemp[1].x;
-
-        //set positions
-        object_2.setPos(PVector.add(pos, bFinal[1]));
-        pos.add(bFinal[0]);
-        */
         //set velocities
         speed.x = cosine * vFinal[0].x - sine * vFinal[0].y;
         speed.y = cosine * vFinal[0].y + sine * vFinal[0].x;
@@ -94,7 +78,6 @@ class PhysicsObject {
             cosine * vFinal[1].x - sine * vFinal[1].y,
             cosine * vFinal[1].y + sine * vFinal[1].x));
         
-        float damping = 0.9f;
         speed.mult(damping);
         object_2.getSpeed().mult(damping);
     }
@@ -137,9 +120,11 @@ class PhysicsObject {
     public void setSpeed(PVector _speed) {
         speed = _speed;
     }
-
     public PVector getSpeed() {
         return speed;
+    }
+    public void setDamping(float _damping) {
+        damping = _damping;
     }
 
 }
