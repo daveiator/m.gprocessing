@@ -15,16 +15,17 @@ class PhysicsController {
     }
 
 
-    public void calculateCollisions() {
+    private void calculateCollisions() {
         for (int i = 0; i < objects.size(); i++) {
+            PhysicsObject object = objects.get(i);
             for (int j = i + 1; j < objects.size(); j++) {
-                PhysicsObject object1 = objects.get(i);
                 PhysicsObject object2 = objects.get(j);
-                if (object1.intersects(object2)) {
-                    object1.collide(object2);
-                    object2.collide(object1);
+                if (object.intersects(object2)) {
+                    println("Collision!");
+                    object.collide(object2);
                 }
             }
+            object.checkBounds(0, 0, width, height);
         }
     }
 
@@ -32,6 +33,8 @@ class PhysicsController {
         for (PhysicsObject object : objects) {
             object.move();
         }
+
+        calculateCollisions();
     }
 
     public void draw() {
