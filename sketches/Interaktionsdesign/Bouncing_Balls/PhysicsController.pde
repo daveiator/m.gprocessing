@@ -1,12 +1,14 @@
 class PhysicsController {
     
     private ArrayList<PhysicsObject> objects = new ArrayList<PhysicsObject>();
+    private float damping = 1.0f;
 
     public PhysicsController() {
         //
     }
 
     public void add(PhysicsObject object) {
+        object.setDamping(damping);
         objects.add(object);
     }
 
@@ -24,8 +26,9 @@ class PhysicsController {
     }
 
     public void setDamping(float d) {
+        damping = d;
         for (PhysicsObject object : objects) {
-            object.setDamping(d);
+            object.setDamping(damping);
         }
     }
 

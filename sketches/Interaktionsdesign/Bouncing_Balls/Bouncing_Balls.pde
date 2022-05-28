@@ -93,10 +93,11 @@ void keyPressed() {
             transparent = !transparent;
     }
     if(Character.isDigit(key)) {
-        if (key == '0') {
-            c.setDamping(1);
+        int num = Character.getNumericValue(key);
+        if (num == 0) {
+            c.setDamping(1.0);
+        } else {
+            c.setDamping(num / 100.0 + .9);
         }
-        c.setDamping(key / 10.0);
     }
-    println(key);
 }

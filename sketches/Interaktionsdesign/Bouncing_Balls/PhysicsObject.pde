@@ -78,8 +78,6 @@ class PhysicsObject {
             cosine * vFinal[1].x - sine * vFinal[1].y,
             cosine * vFinal[1].y + sine * vFinal[1].x));
         
-        speed.mult(damping);
-        object_2.getSpeed().mult(damping);
     }
 
     public boolean intersects(PhysicsObject object_2) {
