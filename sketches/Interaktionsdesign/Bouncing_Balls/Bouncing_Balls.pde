@@ -89,7 +89,7 @@ void keyPressed() {
         case 'c':
             c = new PhysicsController();
             break;
-        case 'b':
+        case 't':
             transparent = !transparent;
     }
     if(Character.isDigit(key)) {

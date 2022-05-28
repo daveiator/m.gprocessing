@@ -8,11 +8,14 @@ Usage:
         The ball will grow automatically.
         A red ball means, it is not big enough yet.
         Release the mouse to launch the ball.
+
+        Right-click to remove a ball
     Keyboard:
         [1 - 9]:  change the damping with from [.90 to .99] 
         0: Press 0 to turn damping off (default)
 
         c: clear the canvas
+        t: adds a trail
 
 
 ===============================================================================================
