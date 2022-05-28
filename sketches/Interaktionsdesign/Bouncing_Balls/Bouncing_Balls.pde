@@ -1,5 +1,6 @@
 PhysicsObject b;
 PhysicsController c;
+Gradient colors;
 int mouseStartX, mouseStartY;
 float mousePower;
 boolean transparent = false;
@@ -10,18 +11,22 @@ void setup() {
     c = new PhysicsController();
     c.add(new PhysicsObject(width/2, height/2, 50, 0 ,0));
     background(0);
+
+    color[] col = {color(0, 255, 255), color(255), color(255, 0, 255)};
+    colors = new Gradient(col);
+    
 }
 
 void draw() {
+    //draw background
     if(transparent) {
         fill(0, 50);
     } else {
         fill(0);
     }
     rect(0, 0, width, height);
-    fill(255);
     c.update();
-    c.draw();
+    c.draw(colors);
 
     // drawText();
     if(mousePressed) {

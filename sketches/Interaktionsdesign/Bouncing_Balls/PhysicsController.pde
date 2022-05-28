@@ -48,7 +48,7 @@ class PhysicsController {
 
     public void update() {
         for (PhysicsObject object : objects) {
-            object.move();
+            object.move(gravity);
         }
 
         calculateCollisions();
@@ -56,10 +56,16 @@ class PhysicsController {
 
     public void draw() {
         for (PhysicsObject object : objects) {
+            fill(255);
             object.draw();
         }
     }
 
-
-
+    public void draw(Gradient g) {
+        for (PhysicsObject object : objects) {
+            float speed = object.getSpeed().mag();
+            fill(g.getColor(speed / max(width, height) * 4));
+            object.draw();
+        }
+    }
 }
