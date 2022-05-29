@@ -48,7 +48,7 @@ class PhysicsController {
 
     public void update() {
         for (PhysicsObject object : objects) {
-            object.move(gravity);
+            object.move();
         }
 
         calculateCollisions();

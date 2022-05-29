@@ -77,7 +77,6 @@ class PhysicsObject {
         object_2.setSpeed(new PVector(
             cosine * vFinal[1].x - sine * vFinal[1].y,
             cosine * vFinal[1].y + sine * vFinal[1].x));
-        
     }
 
     public boolean intersects(PhysicsObject object_2) {
@@ -92,17 +91,17 @@ class PhysicsObject {
 
         if (pos.x < width_min) {
             pos.x = width_min;
-            speed.x *= -1;
+            speed.x = abs(speed.x);
         } else if (pos.x > width_max) {
             pos.x = width_max;
-            speed.x *= -1;
+            speed.x = -abs(speed.x);
         }
         if (pos.y < height_min) {
             pos.y = height_min;
-            speed.y *= -1;
+            speed.y = abs(speed.y);
         } else if (pos.y > height_max) {
             pos.y = height_max;
-            speed.y *= -1;
+            speed.y = -abs(speed.y);
         }
     }
 
