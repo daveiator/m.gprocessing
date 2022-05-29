@@ -80,7 +80,7 @@ class PhysicsObject {
     }
 
     public boolean intersects(PhysicsObject object_2) {
-        return pos.dist(object_2.getPos()) < r + object_2.r;
+        return pos.dist(object_2.getPos()) + 0.1f < r + object_2.getR();
     }
 
     public void checkBounds(float width_min, float height_min, float width_max, float height_max) {
