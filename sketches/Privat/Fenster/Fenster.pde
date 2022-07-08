@@ -10,6 +10,7 @@ void settings(){
 
 
 void setup(){
+    if (!System.getProperty("os.name").toLowerCase().startsWith("windows")) { exit(); }
     dWindow = new dynWindow(500, 500, 400, 200, "dynWindow");
 
 }
